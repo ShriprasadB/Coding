@@ -1,10 +1,6 @@
 class Solution:
     def longestSubarray(self, nums: List[int]) -> int:
-        count = 0
-        n = len(nums)
-        start = 0
-        max_len = 0
-        i = 0
+        count, start, i, max_len, n = 0, 0, 0, 0, len(nums)
 
         while start < n and i < n:
             if nums[i] == 0:
