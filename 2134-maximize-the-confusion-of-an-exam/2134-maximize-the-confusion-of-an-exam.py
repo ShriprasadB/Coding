@@ -1,9 +1,9 @@
 class Solution:
     def maxConsecutiveAnswers(self, answerKey: str, k: int) -> int:
-        true, false, answer, start, i = 0, 0, 0, 0, 0
+        true, false, answer, start = 0, 0, 0, 0
         n = len(answerKey)
 
-        while i < n:
+        for i in range(n):
             if answerKey[i] == "T":
                 true += 1
             else:
@@ -14,9 +14,9 @@ class Solution:
                     true -= 1
                 else:
                     false -= 1
+                
                 start += 1
                 
             answer = max(answer, i - start + 1)
-            i += 1
 
         return answer
