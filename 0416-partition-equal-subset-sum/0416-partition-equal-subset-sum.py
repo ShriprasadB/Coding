@@ -20,7 +20,7 @@ class Solution:
             return result
 
         return dfs(n - 1, tuple(nums), sum_)        
-        """
+        
         #dynamic programming
         dp = [[False] * (sum_ + 1) for i in range(n + 1)]
         dp[0][0] = True
@@ -34,3 +34,17 @@ class Solution:
                     dp[i][j] = dp[i - 1][j] or dp[i - 1][j - cur]
         
         return dp[n][sum_]
+        """
+
+
+        dp = set()
+        dp.add(0)
+        
+        for i in range(n - 1, -1, -1):
+            nextdp = dp.copy()
+            for j in dp:
+                nextdp.add(nums[i] + j)
+            dp = nextdp
+        
+        return sum_ in dp
+                
