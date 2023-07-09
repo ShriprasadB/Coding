@@ -1,35 +1,43 @@
 class Solution:
     def alienOrder(self, words: List[str]) -> str:
-        adj = {c:[] for w in words for c in w}
-        indegree = collections.defaultdict(int)
+        adj = {c:set() for w in words for c in w}
+        n = len(words)
 
-        for i in range(len(words)-1):
-            w1 , w2 = words[i], words[i + 1]
-            
+        for i in range(1, n):
+            w1, w2 = words[i - 1], words[i]
             min_len = min(len(w1), len(w2))
+
             if len(w1) > len(w2) and w1[:min_len] == w2[:min_len]:
                 return ""
             
             for j in range(min_len):
                 if w1[j] != w2[j]:
-                    adj[w1[j]].append(w2[j])
-                    indegree[w2[j]] += 1
+                    adj[w1[j]].add(w2[j])
                     break
         
-        queue = []
+        answer = []
+        visit = set()
+        cycle = set()
+        def dfs(c):
+            if c in cycle:
+                return False
+            
+            if c in visit:
+                return True
+            
+            cycle.add(c)
+
+            for nei in adj[c]:
+                if not dfs(nei):
+                    return False
+            
+            cycle.remove(c)
+            visit.add(c)
+            answer.append(c)
+            return True
+
         for c in adj:
-            if c not in indegree:
-                queue.append(c)     
+            if not dfs(c):
+                return ""
         
-        ans = []
-        while queue:
-            m = len(queue)
-            for i in range(m):
-                node = queue.pop(0)
-                ans.append(node)
-                for nei in adj[node]:
-                    indegree[nei] -= 1
-                    if indegree[nei] == 0:
-                        queue.append(nei)
-        
-        return "".join(ans) if len(adj) == len(ans) else ""
+        return "".join(answer)[::-1]
