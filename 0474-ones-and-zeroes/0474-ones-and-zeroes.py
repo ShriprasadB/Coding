@@ -1,11 +1,19 @@
 class Solution:
     def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
         dp = collections.defaultdict(int)
+        
+        def dfs(m, n, i):
+            if i == len(strs):
+                return 0
+            
+            if (m, n, i) in dp:
+                return dp[(m, n, i)]
+            
+            dp[(m, n, i)] = dfs(m, n, i + 1)
+            mCnt, nCnt = strs[i].count('0'), strs[i].count('1')
+            if mCnt <= m and nCnt <= n:
+                dp[(m, n, i)] = max(dp[(m, n, i)], 1 + dfs(m - mCnt, n - nCnt, i + 1))
+            
+            return dp[(m, n, i)]
 
-        for s in strs:
-            mCnt, nCnt = s.count("0"), s.count("1")
-            for M in range(m, mCnt - 1, -1):
-                for N in range(n, nCnt - 1, -1):
-                    dp[(M, N)] = max(dp[M, N], 1 + dp[(M - mCnt, N - nCnt)])
-
-        return dp[(m, n)]
+        return dfs(m, n, 0)
