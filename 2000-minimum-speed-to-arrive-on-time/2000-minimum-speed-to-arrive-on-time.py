@@ -1,8 +1,6 @@
 class Solution:
     def minSpeedOnTime(self, dist: List[int], hour: float) -> int:
-        left = 1
-        right = 1000000000
-        min_speed = float('inf')
+        left, right, min_speed = 1, 1000000000, float('inf')
 
         while left <= right:
             mid = (left + right)//2
