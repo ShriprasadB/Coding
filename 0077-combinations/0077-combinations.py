@@ -9,14 +9,14 @@ class Solution:
             if len(comb) == k:
                 result.append(comb.copy())
                 return
-                
-            for i in range(start, n + 1):
-                comb.append(i)
-                dfs(i + 1)
-                comb.pop()
+            
+            if start > n:
+                return
+
+            comb.append(start)
+            dfs(start + 1)
+            comb.pop()
+            dfs(start + 1)
 
         dfs(1)
         return result
-        
-        
-        
