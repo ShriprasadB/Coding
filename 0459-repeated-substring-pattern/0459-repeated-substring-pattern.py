@@ -10,7 +10,5 @@ class Solution:
                 substrlen = n // (i + 1)
                 if s[:i + 1]*substrlen == s:
                     return True
-            else:
-                continue
             
         return False
