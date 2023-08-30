@@ -7,10 +7,13 @@ class Solution:
             if nums[i] <= nums[i + 1]:
                 continue
             
-            num_elements = (nums[i] + nums[i+1] - 1)//nums[i + 1]
+            parts = nums[i]//nums[i + 1]
 
-            answer += num_elements - 1
+            if nums[i] % nums[i + 1]:
+                parts += 1
+            
+            answer += parts - 1
 
-            nums[i] = nums[i]//num_elements
+            nums[i] = nums[i]//parts
 
         return answer
