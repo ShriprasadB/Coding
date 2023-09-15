@@ -1,6 +1,5 @@
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        global n
         n = len(points)
         parent = [i for i in range(n)]
         all_edges = []
@@ -19,13 +18,13 @@ class Solution:
             return parent[x]
 
         def union(n1, n2):
+            nonlocal n
             p1, p2 = find(n1), find(n2)
 
             if p1 == p2:
                 return
 
             parent[p2] = p1
-            global n
             n -= 1
             
         for x, y, w in all_edges:
