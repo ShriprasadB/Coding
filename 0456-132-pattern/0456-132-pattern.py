@@ -1,13 +1,16 @@
 class Solution:
     def find132pattern(self, nums: List[int]) -> bool:
-        if len(nums) < 3:
+        k = len(nums)
+
+        if k < 3:
             return False
-        min_array = [-1] * len(nums)
+
+        min_array = [-1] * k
         min_array[0] = nums[0]
-        for i in range(1, len(nums)):
+        for i in range(1, k):
             min_array[i] = min(min_array[i - 1], nums[i])
 
-        k = len(nums)
+        
         for j in range(len(nums) - 1, -1, -1):
             if nums[j] <= min_array[j]:
                 continue
